@@ -8,4 +8,4 @@
      * Create dropzone
      */
 
-}(jQuery, {}));
+}(jQuery,Piccolo));
