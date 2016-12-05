@@ -45,6 +45,8 @@ var Piccolo = (function ($, me){
 
         if(_.isFunction(callback)){
 
+            event = (event.indexOf('on') == 0) ? event : 'on' + event;
+
             var callback_index = _this.events[event].indexOf(callback);
             callback_index || _this.events[event].push(callback);
 
@@ -62,6 +64,8 @@ var Piccolo = (function ($, me){
 
         if(_.isFunction(callback)){
 
+            event = (event.indexOf('on') == 0) ? event : 'on' + event;
+            
             var callback_index = _this.events[event].indexOf(callback);
             callback_index && _this.events[event].splice(callback_index, 1);
 
