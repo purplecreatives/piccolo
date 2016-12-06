@@ -29,19 +29,25 @@
             "class": "mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab material-icons piccolo-button"
         }).append($('<i/>', {
             "class": "material-icons"
-        }).text('crop'));
+        }).text('crop')).onclick(function(evt){
+            me.raise('oncropstart', {});
+        });
 
         var $rotate_right = $('<a/>',{
             "class": "mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab material-icons piccolo-button"
         }).append($('<i/>', {
             "class": "material-icons"
-        }).text('rotate_right'));
+        }).text('rotate_right')).onclick(function(evt){
+            me.raise('onrotatestart', {});
+        });
 
         var $clear = $('<a/>',{
             "class": "mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab material-icons piccolo-button"
         }).append($('<i/>', {
             "class": "material-icons"
-        }).text('clear'));
+        }).text('clear')).onclick(function(evt){
+            me.raise('onreset', {});
+        });
 
         //Card Actions
         var $card_actions = $('<div/>',{
@@ -64,7 +70,7 @@
         $parent.append($card);
 
         return $card_content;
-        
+
     }
 
 
