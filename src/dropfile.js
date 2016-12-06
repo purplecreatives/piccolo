@@ -15,7 +15,8 @@
      */
     me.createDropzone = function(parent){
 
-        $parent = $(parent);
+        var $parent = $(parent);
+        $parent.addClass('piccolo');
 
         //Test drag and drop support
         var canDragAndDrop = _this.supportsFileAPI();
