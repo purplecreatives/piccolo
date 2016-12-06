@@ -71,6 +71,8 @@ var Piccolo = (function ($, me){
      */
     me.un = function(event, callback){
 
+        me.settings.debug && console.log('Unregistering event: ' + event);
+        
         if(_.isFunction(callback)){
 
             event = (event.indexOf('on') == 0) ? event : 'on' + event;
