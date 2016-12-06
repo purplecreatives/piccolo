@@ -48,12 +48,12 @@ var Piccolo = (function ($, me){
 
         if(_.isFunction(callback)){
 
-            me.settings.debug && console.log('Registered event: ' + event);
-
-            event = (event.indexOf('on') == 0) ? event : 'on' + event;
+            event = (event.indexOf('on') === 0) ? event : 'on' + event;
 
             var callback_index = _this.events[event].indexOf(callback);
-            callback_index || _this.events[event].push(callback);
+            (callback_index >= 0) || _this.events[event].push(callback);
+
+            me.settings.debug && console.log('Registered ' + _this.events[event].length + ' function(s) for event ' + event);
 
         }else{
 
@@ -72,13 +72,13 @@ var Piccolo = (function ($, me){
     me.un = function(event, callback){
 
         me.settings.debug && console.log('Unregistering event: ' + event);
-        
+
         if(_.isFunction(callback)){
 
             event = (event.indexOf('on') == 0) ? event : 'on' + event;
 
             var callback_index = _this.events[event].indexOf(callback);
-            callback_index && _this.events[event].splice(callback_index, 1);
+            (callback_index >= 0) && _this.events[event].splice(callback_index, 1);
 
         }
 
@@ -92,13 +92,18 @@ var Piccolo = (function ($, me){
      */
     me.raise = function(event, evt){
 
+        var count = 0;
+
         //Raise event on seperate thread
         _.defer(function(){
 
             me.settings.debug && console.log('Raising event: ' + event);
 
+            console.log(_this.events[event]);
+
             _this.events[event] && _this.events[event].forEach(function(fxn){
                 try{
+                    me.settings.debug && console.log('Raising event: ' + ++count);
                     fxn(evt);
                 }catch(e){
 
