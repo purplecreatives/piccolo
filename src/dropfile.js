@@ -12,7 +12,7 @@
     /**
      * DOM
      */
-    _this.createDropzone = function(parent){
+    me.createDropzone = function(parent){
 
         $parent = $(parent);
 
