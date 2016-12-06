@@ -93,8 +93,14 @@ var Piccolo = (function ($, me){
         //Raise event on seperate thread
         _.defer(function(){
 
+            me.settings.debug && console.log('Raising event: ' + event);
+
             _this.events[event] && _this.events[event].forEach(function(fxn){
-                fxn(evt);
+                try{
+                    fxn(evt);
+                }catch(e){
+
+                }
             });
 
         })
