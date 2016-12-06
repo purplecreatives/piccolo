@@ -8,6 +8,7 @@
      * Create dropzone
      */
     var _this = {};
+    me = me || {};
 
     /**
      * DOM
