@@ -32,7 +32,8 @@ var Piccolo = (function ($, me){
         imagesdirectory: '',
         uploadurl: '',
         postvariablename: '',
-        multiplefileupload: false
+        multiplefileupload: false,
+        debug: true
     };
 
 
@@ -65,7 +66,7 @@ var Piccolo = (function ($, me){
         if(_.isFunction(callback)){
 
             event = (event.indexOf('on') == 0) ? event : 'on' + event;
-            
+
             var callback_index = _this.events[event].indexOf(callback);
             callback_index && _this.events[event].splice(callback_index, 1);
 
@@ -102,11 +103,21 @@ var Piccolo = (function ($, me){
         me.settings = $.extend(me.settings, options);
 
         //Create dropzone
-        _this.createDropzone(this);
+        me.createDropzone(this);
 
         return this;        //Return object for chain
 
     };
+
+    /**
+     * Listen for image ready event to add canvas and menue
+     */
+
+    me.on('imageready', function(evt){
+
+        console.log(evt);
+
+    });
 
 
     return me;
