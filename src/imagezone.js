@@ -43,6 +43,18 @@
             "class": "material-icons"
         }).text('clear'));
 
+        var $done = $('<a/>',{
+            "class": "mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab material-icons piccolo-button"
+        }).append($('<i/>', {
+            "class": "material-icons"
+        }).text('done'));
+
+        var $cancel = $('<a/>',{
+            "class": "mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab material-icons piccolo-button"
+        }).append($('<i/>', {
+            "class": "material-icons"
+        }).text('cancel'));
+
         //Card Actions
         var $card_actions = $('<div/>',{
             "class": "mdl-card__actions mdl-card--border"
@@ -63,18 +75,94 @@
         //container
         $parent.append($card);
 
-        //Set event listeners
-        $clear.click(function(evt){
+
+        var clear_click_handler = function(evt){
+
             me.raise('onreset', {});
-        });
 
-        $rotate_right.click(function(evt){
+        };
+
+        
+        var rotate_click_handler = function(evt){
+
             me.raise('onrotatestart', {});
-        });
+            $done.off(); $cancel.off();
 
-        $crop.click(function(evt){
+            $done.click(function(evt){
+
+                me.raise('onrotateend', {});
+                reset();
+
+            });
+
+            $cancel.click(function(evt){
+
+                me.raise('onrotatecancel', {});
+                reset();
+
+            });
+
+            $card_actions.empty();
+            $card_actions.append($('<span/>', { "class": "piccolo-button"}).text('Rotate image'))
+                .append($done)
+                .append($cancel);
+
+        };
+
+        
+        var crop_click_handler = function(evt){
+
             me.raise('oncropstart', {});
-        });
+            $done.off(); $cancel.off();
+
+            $done.click(function(evt){
+
+                me.raise('oncropend', {});
+                reset();
+
+            });
+
+            $cancel.click(function(evt){
+
+                me.raise('oncropcancel', {});
+                reset();
+
+            });
+
+            $card_actions.empty();
+            $card_actions.append($('<span/>', { "class": "piccolo-button"}).text('Crop image'))
+                .append($done)
+                .append($cancel);
+
+        };
+
+
+        //Clear click handler
+        $clear.click(clear_click_handler);
+        //Rotate click handler
+        $rotate_right.click(rotate_click_handler);
+        //Crop click handler
+        $crop.click(crop_click_handler);
+
+
+        //Reset actions
+        function reset(){
+
+            $card_actions.empty();
+
+            //Clear click handler
+            $clear.click(clear_click_handler);
+            //Rotate click handler
+            $rotate_right.click(rotate_click_handler);
+            //Crop click handler
+            $crop.click(crop_click_handler);
+
+            $card_actions.append($crop)
+                .append($rotate_right)
+                .append($clear);
+
+        }
+
 
         return $card_content;
 
