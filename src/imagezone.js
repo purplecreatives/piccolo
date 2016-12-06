@@ -29,25 +29,19 @@
             "class": "mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab material-icons piccolo-button"
         }).append($('<i/>', {
             "class": "material-icons"
-        }).text('crop')).onclick(function(evt){
-            me.raise('oncropstart', {});
-        });
+        }).text('crop'));
 
         var $rotate_right = $('<a/>',{
             "class": "mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab material-icons piccolo-button"
         }).append($('<i/>', {
             "class": "material-icons"
-        }).text('rotate_right')).onclick(function(evt){
-            me.raise('onrotatestart', {});
-        });
+        }).text('rotate_right'));
 
         var $clear = $('<a/>',{
             "class": "mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab material-icons piccolo-button"
         }).append($('<i/>', {
             "class": "material-icons"
-        }).text('clear')).onclick(function(evt){
-            me.raise('onreset', {});
-        });
+        }).text('clear'));
 
         //Card Actions
         var $card_actions = $('<div/>',{
@@ -68,6 +62,19 @@
         //Add material card to parent
         //container
         $parent.append($card);
+
+        //Set event listeners
+        $clear.click(function(evt){
+            me.raise('onreset', {});
+        });
+
+        $rotate_right.click(function(evt){
+            me.raise('onrotatestart', {});
+        });
+
+        $crop.click(function(evt){
+            me.raise('oncropstart', {});
+        });
 
         return $card_content;
 
