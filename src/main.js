@@ -44,12 +44,20 @@ var Piccolo = (function ($, me){
      */
     me.on = function(event, callback){
 
+        me.settings.debug && console.log('Registering event: ' + event);
+
         if(_.isFunction(callback)){
+
+            me.settings.debug && console.log('Registered event: ' + event);
 
             event = (event.indexOf('on') == 0) ? event : 'on' + event;
 
             var callback_index = _this.events[event].indexOf(callback);
             callback_index || _this.events[event].push(callback);
+
+        }else{
+
+            me.settings.debug && console.log('Event callback invalid: ' + event);
 
         }
 
