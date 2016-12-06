@@ -23,27 +23,27 @@
 
 
         //Card DIV
-        $card = $('<div/>', {
+        var $card = $('<div/>', {
             "class": "mdl-card"
         });
 
         //Card content
-        $card_content = $('<div/>', {
+        var $card_content = $('<div/>', {
             "class": "mdl-card__title mdl-card--expand"
         });
 
         //Card title
-        $card_title = $('<h2/>', {
+        var $card_title = $('<h2/>', {
             "class": "mdl-card__title-text"
         }).text("Upload photo");
 
         //Card supporting text
-        $card_stext = $('<div/>', {
+        var $card_stext = $('<div/>', {
             "class": "mdl-card__supporting-text"
         }).text('Drag and drop photos, or pick photo to upload.');
 
         //Card Actions
-        $card_actions = $('<div/>',{
+        var $card_actions = $('<div/>',{
             "class": "mdl-card__actions mdl-card--border"
         }).append($('<a/>',{
             "class": "mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
