@@ -3,6 +3,9 @@
  */
 (function($, me){
 
+    me = me || {};
+    var _this = {};
+
     me.createImagezone = function(parent){
 
         var $parent = $(parent);
