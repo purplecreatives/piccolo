@@ -18,8 +18,10 @@ var Piccolo = (function ($, me){
             onimageuploaded: [],
             oncropstart: [],
             oncropend: [],
+            oncropcancel: [],
             onrotatestart: [],
             onrotateend: [],
+            onrotatecancel: [],
             onreset: []
         }
 
