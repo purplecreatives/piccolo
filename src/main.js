@@ -19,7 +19,8 @@ var Piccolo = (function ($, me){
             oncropstart: [],
             oncropend: [],
             onrotatestart: [],
-            onrotateend: []
+            onrotateend: [],
+            onreset: []
         }
 
     };
