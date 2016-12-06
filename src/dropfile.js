@@ -20,18 +20,10 @@
         //Test drag and drop support
         var canDragAndDrop = _this.supportsFileAPI();
 
-        if(canDragAndDrop){
-
-            //Register drag and drop events on dropzone
-            $parent.on('dragover', _this.handleDragOver);
-            $parent.on('drop', _this.handleDropzoneFileSelect);
-
-        }
-
 
         //Card DIV
         $card = $('<div/>', {
-            "class": "mdl-card mdl-shadow--2dp"
+            "class": "mdl-card"
         });
 
         //Card content
@@ -69,6 +61,27 @@
         //Add material card to parent
         //container
         $parent.append($card);
+
+
+        if(canDragAndDrop){
+
+            //Register drag and drop events on dropzone
+            $parent.on('dragover', _this.handleDragOver);
+            $parent.on('drop', _this.handleDropzoneFileSelect);
+
+            $parent.on('dragover', function(evt){
+
+                $card.addClass("mdl-shadow--2dp");
+
+            });
+
+            $parent.on('dragleave', function(evt){
+
+                $card.removeClass("mdl-shadow--2dp");
+
+            });
+
+        }
 
     };
 
