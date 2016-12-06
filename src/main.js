@@ -113,6 +113,8 @@ var Piccolo = (function ($, me){
      */
     $.fn.piccolo = function(options){
 
+        me.settings.debug && console.log('Init Piccolo from jQuery');
+
         //Extend settings with options passed
         me.settings = $.extend(me.settings, options);
 
