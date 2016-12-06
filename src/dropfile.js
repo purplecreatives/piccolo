@@ -46,12 +46,24 @@
             "class": "mdl-card__supporting-text"
         }).text('Drag and drop photos, or pick photo to upload.');
 
+        var $pick = $('<a/>',{
+            "class": "mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+        }).text('Pick Photo');
+
+        var $file_picker = $('<input/>', { "type": "file" })
+            .css('display', 'none');
+
         //Card Actions
         var $card_actions = $('<div/>',{
             "class": "mdl-card__actions mdl-card--border"
-        }).append($('<a/>',{
-            "class": "mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
-        }).text('Pick Photo'));
+        }).append($pick);
+
+        $card_actions.append($file_picker);
+
+        $pick.click(function(evt){
+            $file_picker.click();
+        });
+        $file_picker.on('change', _this.handleFileSelect);
 
 
         //Add card title to card content
@@ -131,6 +143,24 @@
         _this.files.length && _this.loadFileAt(_this.currentfileindex);
 
 
+    };
+
+
+    /**
+     * Handles select file selection
+     * @param evt
+     */
+    _this.handleFileSelect = function(evt){
+
+        evt.stopPropagation();
+        evt.preventDefault();
+
+        //Get valid files dropped
+        _this.files = _this.getValidFiles(evt.originalEvent.target.files);
+
+        _this.currentfileindex = 0;
+        _this.files.length && _this.loadFileAt(_this.currentfileindex);
+        
     };
 
 
