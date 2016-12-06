@@ -78,7 +78,7 @@
             $parent.on('dragleave', function(evt){
 
                 $card.removeClass("mdl-shadow--2dp");
-
+                
             });
 
         }
