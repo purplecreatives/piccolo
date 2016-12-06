@@ -16,29 +16,55 @@
         $parent.empty();
 
         //Card DIV
-        var $card = $('<canvas/>', {
+        var $card = $('<div/>', {
             "class": "mdl-card mdl-shadow--2dp"
         });
 
-        //Card Menu
-        var $card_menu = $('<div/>',{
-            "class": "mdl-card__menu"
+        //Card content
+        var $card_content = $('<canvas/>', {
+            "class": "mdl-card__title mdl-card--expand"
         });
 
-        $card_menu.append($('<button/>', {
-            "class": "mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"
-        }).append($('<i/>',{
+        var $crop = $('<a/>',{
+            "class": "mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab material-icons piccolo-button"
+        }).append($('<i/>', {
             "class": "material-icons"
-        }).html('crop')));
+        }).text('crop'));
+
+        var $rotate_right = $('<a/>',{
+            "class": "mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab material-icons piccolo-button"
+        }).append($('<i/>', {
+            "class": "material-icons"
+        }).text('rotate_right'));
+
+        var $clear = $('<a/>',{
+            "class": "mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab material-icons piccolo-button"
+        }).append($('<i/>', {
+            "class": "material-icons"
+        }).text('clear'));
+
+        //Card Actions
+        var $card_actions = $('<div/>',{
+            "class": "mdl-card__actions mdl-card--border"
+        }).append($crop)
+            .append($rotate_right)
+            .append($clear);
+
+
+        //Add card title to card content
+        //$card_content.append($card_title);
 
         //Add card content, summary text, and actions
         //to material card
-        $card.append($card_menu);
+        $card.append($card_content)
+            .append($card_actions);
 
         //Add material card to parent
         //container
         $parent.append($card);
 
+        return $card_content;
+        
     }
 
 
