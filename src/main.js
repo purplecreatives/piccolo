@@ -151,6 +151,15 @@ var Piccolo = (function ($, me){
     });
 
 
+    /**
+     * Listen to reset event to reset DOM
+     */
+    me.on('reset', function(evt){
+
+        me.createDropzone(_this.zone);
+
+    });
+
     return me;
 
 }(jQuery, {}));
