@@ -18,6 +18,10 @@
         var $parent = $(parent);
         $parent.addClass('piccolo');
 
+        //Remove all events on parent
+        $parent.off();
+        $parent.empty();
+
         //Test drag and drop support
         var canDragAndDrop = _this.supportsFileAPI();
 
