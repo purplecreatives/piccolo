@@ -122,6 +122,8 @@ var Piccolo = (function ($, me){
 
         me.settings.debug && console.log('Init Piccolo from jQuery');
 
+        _this.zone = this;
+
         //Extend settings with options passed
         me.settings = $.extend(me.settings, options);
 
@@ -138,7 +140,10 @@ var Piccolo = (function ($, me){
 
     me.on('imageready', function(evt){
 
-        console.log(evt);
+        var canvas = me.createImagezone(_this.zone);
+
+        //Image and canvas ready, raise imageloaded event
+        me.raise('onimageloaded', { target: canvas, source: evt.source });
 
     });
 
