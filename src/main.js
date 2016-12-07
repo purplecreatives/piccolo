@@ -143,10 +143,10 @@ var Piccolo = (function ($, me){
 
     me.on('imageready', function(evt){
 
-        var canvas = me.createImagezone(_this.zone);
+        var imagezone = me.createImagezone(_this.zone);
 
         //Image and canvas ready, raise imageloaded event
-        me.raise('onimageloaded', { target: canvas, source: evt.source });
+        me.raise('onimageloaded', { target: imagezone, source: evt.source });
 
     });
 
