@@ -146,6 +146,7 @@ var Piccolo = (function ($, me){
         var imagezone = me.createImagezone(_this.zone);
 
         //Image and canvas ready, raise imageloaded event
+        //imagezone is equivalent to $(<img/>); evt.source is Image object
         me.raise('onimageloaded', { target: imagezone, source: evt.source });
 
     });
