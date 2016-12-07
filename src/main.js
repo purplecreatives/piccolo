@@ -34,7 +34,7 @@ var Piccolo = (function ($, me){
     me.settings = {
         imagesdirectory: '',
         uploadurl: '',
-        postvariablename: '',
+        postvariablename: 'file',
         multiplefileupload: false,
         debug: true
     };
@@ -101,8 +101,7 @@ var Piccolo = (function ($, me){
         _.defer(function(){
 
             me.settings.debug && console.log('Raising event: ' + event);
-
-            console.log(_this.events[event]);
+            me.settings.debug && console.log(_this.events[event]);
 
             _this.events[event] && _this.events[event].forEach(function(fxn){
                 try{
@@ -143,10 +142,11 @@ var Piccolo = (function ($, me){
 
     me.on('imageready', function(evt){
 
-        var canvas = me.createImagezone(_this.zone);
+        var imagezone = me.createImagezone(_this.zone);
 
         //Image and canvas ready, raise imageloaded event
-        me.raise('onimageloaded', { target: canvas, source: evt.source });
+        //imagezone is equivalent to $(<img/>); evt.source is Image object
+        me.raise('onimageloaded', { target: imagezone, source: evt.source });
 
     });
 
