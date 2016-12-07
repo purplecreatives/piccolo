@@ -34,7 +34,7 @@ var Piccolo = (function ($, me){
     me.settings = {
         imagesdirectory: '',
         uploadurl: '',
-        postvariablename: '',
+        postvariablename: 'file',
         multiplefileupload: false,
         debug: true
     };
@@ -101,8 +101,7 @@ var Piccolo = (function ($, me){
         _.defer(function(){
 
             me.settings.debug && console.log('Raising event: ' + event);
-
-            console.log(_this.events[event]);
+            me.settings.debug && console.log(_this.events[event]);
 
             _this.events[event] && _this.events[event].forEach(function(fxn){
                 try{
