@@ -35,7 +35,7 @@
             "class": "mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab material-icons piccolo-button"
         }).append($('<i/>', {
             "class": "material-icons"
-        }).text('rotate_right'));
+        }).text('rotate_90_degrees_ccw'));
 
         var $clear = $('<a/>',{
             "class": "mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab material-icons piccolo-button"
@@ -54,6 +54,18 @@
         }).append($('<i/>', {
             "class": "material-icons"
         }).text('cancel'));
+
+        var $rotate_ccw = $('<a/>',{
+            "class": "mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab material-icons piccolo-button"
+        }).append($('<i/>', {
+            "class": "material-icons"
+        }).text('rotate_left'));
+
+        var $rotate_cw = $('<a/>',{
+            "class": "mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab material-icons piccolo-button"
+        }).append($('<i/>', {
+            "class": "material-icons"
+        }).text('rotate_right'));
 
         //Card Actions
         var $card_actions = $('<div/>',{
@@ -95,6 +107,20 @@
 
             });
 
+            $rotate_ccw.click(function(evt){
+
+                me.raise('onrotateccw', {});
+                reset();
+
+            });
+
+            $rotate_cw.click(function(evt){
+
+                me.raise('onrotateecw', {});
+                reset();
+
+            });
+
             $cancel.click(function(evt){
 
                 me.raise('onrotatecancel', {});
@@ -105,6 +131,8 @@
             $card_actions.empty();
             $card_actions.append($('<span/>', { "class": "piccolo-button"}).text('Rotate image'))
                 .append($done)
+                .append($rotate_ccw)
+                .append($rotate_cw)
                 .append($cancel);
 
         };
