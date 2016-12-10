@@ -110,14 +110,12 @@
             $rotate_ccw.click(function(evt){
 
                 me.raise('onrotateccw', {});
-                reset();
 
             });
 
             $rotate_cw.click(function(evt){
 
                 me.raise('onrotateecw', {});
-                reset();
 
             });
 
