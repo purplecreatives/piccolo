@@ -21,7 +21,7 @@
         });
 
         //Card content
-        var $card_content = $('<img/>', {
+        var $card_content = $('<canvas/>', {
             "class": "mdl-card__title mdl-card--expand"
         });
 
