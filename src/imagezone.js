@@ -115,7 +115,7 @@
 
             $rotate_cw.click(function(evt){
 
-                me.raise('onrotateecw', {});
+                me.raise('onrotatecw', {});
 
             });
 
@@ -127,7 +127,7 @@
             });
 
             $card_actions.empty();
-            $card_actions.append($('<span/>', { "class": "piccolo-button"}).text('Rotate image'))
+            $card_actions.append($('<span/>', { "class": "piccolo-button"}).text('Rotate'))
                 .append($done)
                 .append($rotate_ccw)
                 .append($rotate_cw)
@@ -156,7 +156,7 @@
             });
 
             $card_actions.empty();
-            $card_actions.append($('<span/>', { "class": "piccolo-button"}).text('Crop image'))
+            $card_actions.append($('<span/>', { "class": "piccolo-button"}).text('Crop'))
                 .append($done)
                 .append($cancel);
 
