@@ -3,3 +3,7 @@
     height: 292px;
     margin: 16px auto;
 }
+.canv{
+    max-width: 100%;
+    max-height: 100%;
+}
