@@ -3,12 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="../../lib/jquery/jquery-1.11.1.min.js"></script>
+    <style>
+        .resize_box{
+            min-height: 0px;
+            min-width: 0px;
+            background-color: transparent;
+            position: absolute;
+            display: block;
+            border: 3px dotted darkgrey;
+            pointer-events:none;
+        }
+    </style>
 </head>
 <body>
-    <div>
-        <canvas>
-
-        </canvas>
+    <div id="theDiv">
+        <canvas id="theCanvas" width="600" height="600" style="background-color: azure" ></canvas>
+        <input type="file" id="file_input" onchange="fileselected(event)">
     </div>
 </body>
+<script>
+    var cropBox = {
+        pX: 0,
+        pY: 0,
+        pHeight: 0,
+        pWidth: 0,
+        pBody: {},
+        pBox:  {},
+        SizingBox:false,
+        get X() {
+            return this.pX
+        },
+        set X(val) {
+            this.pX = val;
+            this.pBox.css({left:val + "px"})
+        },
+        get Y() {
+            return this.pY;
+        },
+        set Y(val) {
+            this.pY = val;
+            this.pBox.css({top:val + "px"})
+        },
+        get Height() {
+            return this.pHeight;
+        },
+        set Height(val) {
+            if(val < 0){
+                this.Y = this.Y + val;
+            }
+            this.pHeight = Math.abs(val);
+            this.pBox.css({height:Math.abs(val) + "px"})
+        },
+        get Width() {
+            return this.pWidth;
+        },
+        set Width(val) {
+            if(val < 0){
+                this.X = this.X + val;
+            }
+            this.pWidth = Math.abs(val);
+            this.pBox.css({width:Math.abs(val) + "px"})
+        },
+        initialize : function () {
+            this.pBody = $('body');
+            if($('#_box_resize').length == 0) {
+                this.pBody.append("<div class='resize_box' id='_box_resize'></div>");
+                this.pBox = $('#_box_resize');
+            }
+        }
+    };
+    var canvas = document.getElementById('theCanvas');
+    var fileselected = function (e) {
+
+         canvas = document.getElementById('theCanvas'),
+                context = canvas.getContext('2d');
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        var URL = window.webkitURL || window.URL;
+        var url = URL.createObjectURL(e.target.files[0]);
+        var img = new Image();
+        img.src = url;
+
+
+        img.onload = function() {
+
+            img_width = img.width;
+            img_height = img.height;
+
+            context.drawImage(img, 0, 0, img_width, img_height);
+
+        }
+    };
+    canvas.onmousedown = function (e){
+        cropBox.initialize();
+        cropBox.Y = e.y;
+        cropBox.X = e.x;
+        cropBox.SizingBox = true;
+    };
+    canvas.onmousemove = function (e) {
+        if(cropBox.SizingBox){
+            cropBox.Width = e.x - cropBox.X;
+            cropBox.Height = e.y - cropBox.Y;
+        }
+    }
+</script>
 </html>

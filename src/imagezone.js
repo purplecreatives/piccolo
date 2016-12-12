@@ -22,7 +22,7 @@
 
         //Card content
         var $card_content = $('<canvas/>', {
-            "class": "mdl-card__title mdl-card--expand"
+            "class": "mdl-card__title mdl-card--expand canv"
         });
 
         var $crop = $('<a/>',{

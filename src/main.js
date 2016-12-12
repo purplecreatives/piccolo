@@ -38,7 +38,7 @@ var Piccolo = (function ($, me){
         uploadurl: null,
         postvariablename: 'file',
         multiplefileupload: false,
-        debug: true
+        debug: false
     };
 
 
