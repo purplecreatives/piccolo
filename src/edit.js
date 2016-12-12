@@ -7,9 +7,21 @@
     var gimage;
     var gwidth;
     var gheight;
+    var gcanvasheight;
+    var gcanvaswidth;
+    var gparentheight;
+    var gparentwidth;
+    var gcanvasleft;
+    var gcanvasright;
     var gcropper;
     var cropCanvas;
     var rotateAngle = 0;
+    function save(d) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'somewhere', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.send(JSON.stringify(d));
+    }
     me.on('cropstart',function (evt) {
         gcanvas.cropper("enable");
     });
@@ -24,12 +36,35 @@
     me.on('rotateccw', function (evt) {
         rotateAngle -= 45;
         gcanvas.cropper('enable');
+
+        var smaller = Math.min(gparentwidth,gparentheight);
+        var dis = Math.sqrt(gcanvaswidth*gcanvaswidth + gcanvasheight*gcanvasheight);
+        var zoomFactor = 1 - smaller/dis;
         gcanvas.cropper('rotate','-45');
+        if(rotateAngle % 90 == 0){
+            gcanvas.cropper('zoom',zoomFactor);
+            gcanvas.cropper('moveTo',0,0);
+        }else {
+            gcanvas.cropper('zoom',-1*zoomFactor);
+            gcanvas.cropper('moveTo',0,0);
+        }
     });
     me.on('rotatecw', function (evt) {
         rotateAngle += 45;
         gcanvas.cropper('enable');
+
+        var smaller = Math.min(gparentwidth,gparentheight);
+        var dis = Math.sqrt(gcanvaswidth*gcanvaswidth + gcanvasheight*gcanvasheight);
+        var zoomFactor = 1 - smaller/dis;
         gcanvas.cropper('rotate','45');
+        if(rotateAngle % 90 == 0){
+            gcanvas.cropper('zoom',zoomFactor);
+            gcanvas.cropper('moveTo',0,0);
+        }else {
+            gcanvas.cropper('zoom',-1*zoomFactor);
+            gcanvas.cropper('moveTo',0,0);
+        }
+
     });
     me.on('imageloaded',function (target) {
             var $canvas = $(target.target);
@@ -38,8 +73,8 @@
         gimage = image;
                 var width = $canvas.width();
                 var height = $canvas.height();
-                gwidth = width;
-                gheight = height;
+                gwidth = image.naturalWidth;
+                gheight = image.naturalHeight;
                 var canvas = $canvas[0];
                 var cropper;
 
@@ -54,18 +89,38 @@
                 );
 
             gcropper =   $canvas.cropper({
-                    aspectRatio : 1,
                     autoCrop: false,
                     rotatable: true,
                     cropend:function (e) {
                         cropCanvas = $canvas.cropper('getCroppedCanvas');
                     },
                     built: function () {
+                        save($canvas[0].toDataURL());
+                        gcanvasheight = $canvas.next().height();
+                        gcanvaswidth = $canvas.next().width();
+                        var h = $canvas.parent().height();
+                        var w = $canvas.parent().width();
+                        gparentheight = h;
+                        gparentwidth = w;
+
+                        var zoomratio = gcanvasheight/h;
+                        $canvas.cropper("zoom",-1*(1 - zoomratio));
+                        var l = $canvas.cropper('getCanvasData');
+                        $canvas.cropper('moveTo',0,0);
+                        l = $canvas.cropper('getCanvasData');
+                        gcanvasleft = l.left;
+                        gcanvasright = l.right;
+                        gcanvasheight = $canvas.next().height();
+                        gcanvaswidth = $canvas.next().width();
                         $canvas.cropper("disable");
                     }
                         });
     });
     me.on('rotatestart',function (e) {
+
+        }
+    );
+    me.on('rotateend',function (e) {
 
         }
     );
