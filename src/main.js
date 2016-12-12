@@ -124,6 +124,10 @@ var Piccolo = (function ($, me){
      */
     $.fn.piccolo = function(options){
 
+        var $parent = $(this);
+        me.settings.postvariablename = $parent.data("post") || me.settings.postvariablename;
+        me.settings.uploadurl = $parent.data("url") || me.settings.uploadurl;
+
         me.settings.debug && console.log('Init Piccolo from jQuery');
 
         _this.zone = this;
