@@ -17,10 +17,14 @@
     var cropCanvas;
     var rotateAngle = 0;
     function save(d) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'somewhere', true);
-        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xhr.send(JSON.stringify(d));
+        if(me.settings.uploadurl != null){
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', me.settings.uploadurl, true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            var t = {};
+            t[me.setting.postvariablename] = d;
+            xhr.send(JSON.stringify(t));
+        }
     }
     me.on('cropstart',function (evt) {
         gcanvas.cropper("enable");
@@ -31,6 +35,7 @@
     });
     me.on('cropend', function (evt) {
         gcanvas.cropper('replace',cropCanvas.toDataURL());
+        save(cropCanvas.toDataURL());
         gcanvas.cropper('setCropData',false);
     });
     me.on('rotateccw', function (evt) {
@@ -48,6 +53,7 @@
             gcanvas.cropper('zoom',-1*zoomFactor);
             gcanvas.cropper('moveTo',0,0);
         }
+        gcanvas.cropper("disable");
     });
     me.on('rotatecw', function (evt) {
         rotateAngle += 45;
@@ -64,7 +70,8 @@
             gcanvas.cropper('zoom',-1*zoomFactor);
             gcanvas.cropper('moveTo',0,0);
         }
-
+        gcanvas.cropper("disable");
+        console.log(gcanvas[0].toDataURL());
     });
     me.on('imageloaded',function (target) {
             var $canvas = $(target.target);
