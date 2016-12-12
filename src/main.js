@@ -20,6 +20,8 @@ var Piccolo = (function ($, me){
             oncropend: [],
             oncropcancel: [],
             onrotatestart: [],
+            onrotateccw: [],
+            onrotatecw: [],
             onrotateend: [],
             onrotatecancel: [],
             onreset: []
@@ -32,8 +34,8 @@ var Piccolo = (function ($, me){
      * Default settings
      */
     me.settings = {
-        imagesdirectory: '',
-        uploadurl: '',
+        imagesdirectory: null,
+        uploadurl: null,
         postvariablename: 'file',
         multiplefileupload: false,
         debug: true
