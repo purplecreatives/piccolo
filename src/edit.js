@@ -22,7 +22,7 @@
             xhr.open('POST', me.settings.uploadurl, true);
             xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
             var t = {};
-            t[me.setting.postvariablename] = d;
+            t[me.settings.postvariablename] = d;
             xhr.send(JSON.stringify(t));
         }
     }
