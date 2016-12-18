@@ -11,4 +11,4 @@ require '../Response.php';
 $piccolo = Piccolo::init('/xampp/htdocs/piccolo/uploads', 'file');
 $status = $piccolo->save('sample');
 
-echo json_encode(new Response($status, $status));
+echo json_encode(new Response($status, $piccolo));

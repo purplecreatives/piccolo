@@ -9,7 +9,7 @@
 class Piccolo
 {
 
-    public $filetypes = array (
+    private $filetypes = array (
         'application/x-authorware-bin' => '.aab',
         'application/x-authorware-map' => '.aam',
         'application/x-authorware-seg' => '.aas',
@@ -322,13 +322,14 @@ class Piccolo
         'image/bmp' => '.bmp'
     );
 
-    public $fileextension;
-    public $mime;
-    public $base64_image;
-    public $uploaddirectory;
-
+    private $base64_image;
+    private $uploaddirectory;
     private $postvariablename;
 
+    public $fileextension;
+    public $mime;
+    public $filename;
+    public $filesize;
 
     private function __construct($options = array()){
 
@@ -362,12 +363,15 @@ class Piccolo
     public function save($filename_no_extension){
 
         $im = imagecreatefromstring(base64_decode($this->base64_image));
-        $path = $this->uploaddirectory.'/'.$filename_no_extension.$this->fileextension;
+        $this->filename = $filename_no_extension.$this->fileextension;
+        $path = $this->uploaddirectory.'/'.$this->filename;
         $imagefunction = str_replace('/', '', $this->mime);
 
         if($im !== false){
 
             $status = $imagefunction($im, $path);
+            $this->filesize = (int) filesize($path);
+
             imagedestroy($im);
             return $status;
 
