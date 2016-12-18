@@ -35,7 +35,11 @@ class Piccolo
         //Get base64 image text
         $this->base64_image = substr($raw_base64_image, $index_comma);
 
+        //Get file extension from mime
+        $this->fileextension = mime_content_type($this->mime);
+
     }
+
 
     public function save($filename_no_extension){
 
@@ -54,6 +58,7 @@ class Piccolo
         }
 
     }
+
 
     public static function init($postvariablename = 'file'){
 
