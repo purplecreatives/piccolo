@@ -12,11 +12,16 @@ class Piccolo
     public $fileextension;
     public $mime;
     public $base64_image;
+    public $uploaddirectory;
+
     private $postvariablename;
 
-    private function __construct($postvariablename){
 
-        $this->postvariablename = $postvariablename;
+    private function __construct($options = array()){
+
+        //Get configurations
+        $postvariablename = $this->postvariablename = $options['postvariablename'];
+        $this->uploaddirectory = $options['uploaddirectory'];
 
         //Get http payload
         $payload = file_get_contents('php://input');
@@ -44,10 +49,11 @@ class Piccolo
     public function save($filename_no_extension){
 
         $im = imagecreatefromstring($this->base64_image);
+        $path = $this->uploaddirectory.'/'.$filename_no_extension.$this->fileextension;
 
         if($im !== false){
 
-            $status = imagepng($im, $filename_no_extension);
+            $status = imagepng($im, $path);
             imagedestroy($im);
             return $status;
 
