@@ -370,6 +370,8 @@ class Piccolo
         if($im !== false){
 
             $status = $imagefunction($im, $path);
+            $this->filesize = $path;
+
             imagedestroy($im);
             return $status;
 
