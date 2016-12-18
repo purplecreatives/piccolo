@@ -9,7 +9,7 @@
 class Piccolo
 {
 
-    public $definitive = array (
+    public $filetypes = array (
         'application/x-authorware-bin' => '.aab',
         'application/x-authorware-map' => '.aam',
         'application/x-authorware-seg' => '.aas',
@@ -317,7 +317,7 @@ class Piccolo
         'application/zip' => '.zip',
         'multipart/x-zip' => '.zip',
         'text/x-script.zsh' => '.zsh',
-        'image/jpg' => '.jpg',
+        'image/jpeg' => '.jpg',
         'image/png' => '.png',
         'image/bmp' => '.bmp'
     );
@@ -344,7 +344,7 @@ class Piccolo
         $raw_base64_image = $data->$postvariablename;
 
         $index_colon = strpos($raw_base64_image, ':') + 1;
-        $index_semicolon = strpos($raw_base64_image, ';') + 1;
+        $index_semicolon = strpos($raw_base64_image, ';');
         $index_comma = strpos($raw_base64_image, ',') + 1;
 
         //Get MIME
@@ -354,14 +354,14 @@ class Piccolo
         $this->base64_image = substr($raw_base64_image, $index_comma);
 
         //Get file extension from mime
-        $this->fileextension = image_type_to_extension($this->mime);
+        $this->fileextension = $this->filetypes[$this->mime];
 
     }
 
 
     public function save($filename_no_extension){
 
-        $im = imagecreatefromstring($this->base64_image);
+        $im = imagecreatefromstring(base64_decode($this->base64_image));
         $path = $this->uploaddirectory.'/'.$filename_no_extension.$this->fileextension;
 
         if($im !== false){
