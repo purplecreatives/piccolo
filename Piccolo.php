@@ -9,6 +9,7 @@
 class Piccolo
 {
 
+    public $mime;
     public $base64_image;
     private $postvariablename;
 
@@ -16,12 +17,22 @@ class Piccolo
 
         $this->postvariablename = $postvariablename;
 
+        //Get http payload
         $payload = file_get_contents('php://input');
         $data = json_decode($payload);
 
-        $this->base64_image = $data->$postvariablename;
-        $index = strpos($this->base64_image, ',') + 1;
-        $this->base64_image = substr($this->base64_image, $index);
+        //Get file content
+        $raw_base64_image = $data->$postvariablename;
+
+        $index_colon = strpos($this->base64_image, ':') + 1;
+        $index_semicolon = strpos($this->base64_image, ';') + 1;
+        $index_comma = strpos($this->base64_image, ',') + 1;
+
+        //Get MIME
+        $this->mime = substr($raw_base64_image, $index_colon, $index_semicolon - $index_colon);
+
+        //Get base64 image text
+        $this->base64_image = substr($raw_base64_image, $index_comma);
 
     }
 
@@ -31,8 +42,9 @@ class Piccolo
 
         if($im !== false){
 
+            $status = imagepng($im, $filename);
             imagedestroy($im);
-            return true;
+            return $status;
 
         }else{
 
