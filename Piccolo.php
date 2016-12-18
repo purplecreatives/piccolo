@@ -9,6 +9,7 @@
 class Piccolo
 {
 
+    public $fileextension;
     public $mime;
     public $base64_image;
     private $postvariablename;
@@ -24,9 +25,9 @@ class Piccolo
         //Get file content
         $raw_base64_image = $data->$postvariablename;
 
-        $index_colon = strpos($this->base64_image, ':') + 1;
-        $index_semicolon = strpos($this->base64_image, ';') + 1;
-        $index_comma = strpos($this->base64_image, ',') + 1;
+        $index_colon = strpos($raw_base64_image, ':') + 1;
+        $index_semicolon = strpos($raw_base64_image, ';') + 1;
+        $index_comma = strpos($raw_base64_image, ',') + 1;
 
         //Get MIME
         $this->mime = substr($raw_base64_image, $index_colon, $index_semicolon - $index_colon);
@@ -36,13 +37,13 @@ class Piccolo
 
     }
 
-    public function save($filename){
+    public function save($filename_no_extension){
 
         $im = imagecreatefromstring($this->base64_image);
 
         if($im !== false){
 
-            $status = imagepng($im, $filename);
+            $status = imagepng($im, $filename_no_extension);
             imagedestroy($im);
             return $status;
 
