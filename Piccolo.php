@@ -66,10 +66,14 @@ class Piccolo
     }
 
 
-    public static function init($postvariablename = 'file'){
+    public static function init($uploaddirectory, $postvariablename = 'file'){
 
         $postvariablename = ($postvariablename) ? $postvariablename : 'file';
-        return new Piccolo($postvariablename);
+
+        return new Piccolo(array(
+            'postvariablename' => $postvariablename,
+            'uploaddirectory' => $uploaddirectory
+        ));
 
     }
 
