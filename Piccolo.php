@@ -363,10 +363,11 @@ class Piccolo
 
         $im = imagecreatefromstring(base64_decode($this->base64_image));
         $path = $this->uploaddirectory.'/'.$filename_no_extension.$this->fileextension;
+        $imagefunction = str_replace('/', '', $this->mime);
 
         if($im !== false){
 
-            $status = imagepng($im, $path);
+            $status = $imagefunction($im, $path);
             imagedestroy($im);
             return $status;
 
