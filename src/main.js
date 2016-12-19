@@ -4,12 +4,8 @@
 var Piccolo = (function ($, me){
 
     me = me || {};
-
-    var _parent = {
-        incrementId: 0,
-        elements: {}
-    };         //Unique identifier for elements
-
+    me.elements = {};
+    me.incrementId = 0;
 
     function Internal_Piccolo(element, options){
 
@@ -125,6 +121,7 @@ var Piccolo = (function ($, me){
 
                         //Attach element raising event
                         evt.element = _internal.zone;
+                        evt.parentObject = _internal;
                         fxn(evt);
 
                     }catch(e){
@@ -204,7 +201,7 @@ var Piccolo = (function ($, me){
 
         return this.each(function(){
 
-            _parent.elements[_parent.incrementId++ + ""] = new Internal_Piccolo(this, options);
+            me.elements[me.incrementId++ + ""] = new Internal_Piccolo(this, options);
 
         });
 
