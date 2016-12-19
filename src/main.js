@@ -38,7 +38,8 @@ var Piccolo = (function ($, me){
         uploadurl: null,
         postvariablename: 'file',
         multiplefileupload: false,
-        debug: false
+        debug: false,
+        preloadimage: null
     };
 
 
@@ -127,6 +128,7 @@ var Piccolo = (function ($, me){
         var $parent = $(this);
         me.settings.postvariablename = $parent.data("post") || me.settings.postvariablename;
         me.settings.uploadurl = $parent.data("url") || me.settings.uploadurl;
+        me.settings.preloadimage = $parent.data("image") || me.settings.preloadimage;
 
         me.settings.debug && console.log('Init Piccolo from jQuery');
 
