@@ -138,9 +138,7 @@
                     {
                         cropCanvas = $canvas.cropper('getCroppedCanvas');
                     },
-                    built: function ()
-                    {
-                        cropCanvas
+                    built: function () {
                         gcanvasheight = $canvas.next().height();
                         gcanvaswidth = $canvas.next().width();
                         var h = $canvas.parent().height();
@@ -160,13 +158,11 @@
                     }
                         });
     });
-    me.on('rotatestart',function (e)
-        {
+    me.on('rotatestart',function (e) {
 
         }
     );
-    me.on('rotateend',function (e)
-        {
+    me.on('rotateend',function (e) {
         gcropper[0].getContext('2d').rotate(45*Math.PI/180);
         save(gcropper[0].toDataURL());
         }
