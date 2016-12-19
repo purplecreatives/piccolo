@@ -9,7 +9,7 @@
 class Piccolo
 {
 
-    public $filetypes = array (
+    private $filetypes = array (
         'application/x-authorware-bin' => '.aab',
         'application/x-authorware-map' => '.aam',
         'application/x-authorware-seg' => '.aas',
@@ -322,26 +322,23 @@ class Piccolo
         'image/bmp' => '.bmp'
     );
 
-    public $fileextension;
-    public $mime;
-    public $base64_image;
-    public $uploaddirectory;
-
+    private $base64_image;
+    private $uploaddirectory;
     private $postvariablename;
 
+    public $fileextension;
+    public $mime;
+    public $imagefilename;
+    public $filesize;
 
     private function __construct($options = array()){
 
         //Get configurations
-        $postvariablename = $this->postvariablename = $options['postvariablename'];
-        $this->uploaddirectory = $options['uploaddirectory'];
-
-        //Get http payload
-        $payload = file_get_contents('php://input');
-        $data = json_decode($payload);
+        $settings = $options['settings'];
+        $postvariablename = $this->postvariablename = $settings['postvariablename'];
 
         //Get file content
-        $raw_base64_image = $data->$postvariablename;
+        $raw_base64_image = $options[$postvariablename];
 
         $index_colon = strpos($raw_base64_image, ':') + 1;
         $index_semicolon = strpos($raw_base64_image, ';');
@@ -362,12 +359,15 @@ class Piccolo
     public function save($filename_no_extension){
 
         $im = imagecreatefromstring(base64_decode($this->base64_image));
-        $path = $this->uploaddirectory.'/'.$filename_no_extension.$this->fileextension;
+        $this->imagefilename = ($this->imagefilename) ? $this->imagefilename : $filename_no_extension.$this->fileextension;
+        $path = $this->uploaddirectory.'/'.$this->imagefilename;
         $imagefunction = str_replace('/', '', $this->mime);
 
         if($im !== false){
 
             $status = $imagefunction($im, $path);
+            $this->filesize = (int) filesize($path);
+
             imagedestroy($im);
             return $status;
 
@@ -380,14 +380,16 @@ class Piccolo
     }
 
 
-    public static function init($uploaddirectory, $postvariablename = 'file'){
+    public static function init($uploaddirectory){
 
-        $postvariablename = ($postvariablename) ? $postvariablename : 'file';
+        //Get http payload
+        $payload = file_get_contents('php://input');
+        $data = json_decode($payload);
 
-        return new Piccolo(array(
-            'postvariablename' => $postvariablename,
-            'uploaddirectory' => $uploaddirectory
-        ));
+        $piccolo = new Piccolo($data);
+        $piccolo->uploaddirectory = $uploaddirectory;
+
+        return $piccolo;
 
     }
 
