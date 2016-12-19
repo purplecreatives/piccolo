@@ -39,7 +39,8 @@ var Piccolo = (function ($, me){
         postvariablename: 'file',
         multiplefileupload: false,
         debug: false,
-        preloadimage: null
+        preloadimage: null,
+        imagefilename: null
     };
 
 
