@@ -35,7 +35,7 @@ var Piccolo = (function ($, me){
      */
     me.settings = {
         imagesdirectory: null,
-        uploadurl: null,
+        uploadurl: '../../uploads/index.php',
         postvariablename: 'file',
         multiplefileupload: false,
         debug: false

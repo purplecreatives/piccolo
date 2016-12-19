@@ -8,7 +8,7 @@
 require '../Piccolo.php';
 require '../Response.php';
 
-$piccolo = Piccolo::init('/xampp/htdocs/piccolo/uploads', 'file');
+$piccolo = Piccolo::init('C:\xampp\htdocs\piccolo2\uploads', 'file');
 $status = $piccolo->save('sample');
 
 echo json_encode(new Response($status, $status));

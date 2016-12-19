@@ -34,8 +34,8 @@
         gcanvas.cropper("disable");
     });
     me.on('cropend', function (evt) {
-        gcanvas.cropper('replace',cropCanvas.toDataURL());
         save(cropCanvas.toDataURL());
+        gcanvas.cropper('replace',cropCanvas.toDataURL());
         gcanvas.cropper('setCropData',false);
     });
     me.on('rotateccw', function (evt) {
@@ -94,7 +94,7 @@
                     0, 0, image.naturalWidth , image.naturalHeight,
                     0, 0, image.naturalWidth , image.naturalHeight
                 );
-
+                save(canvas.toDataURL());
             gcropper =   $canvas.cropper({
                     autoCrop: false,
                     rotatable: true,
@@ -102,14 +102,13 @@
                         cropCanvas = $canvas.cropper('getCroppedCanvas');
                     },
                     built: function () {
-                        save($canvas[0].toDataURL());
+                        cropCanvas
                         gcanvasheight = $canvas.next().height();
                         gcanvaswidth = $canvas.next().width();
                         var h = $canvas.parent().height();
                         var w = $canvas.parent().width();
                         gparentheight = h;
                         gparentwidth = w;
-
                         var zoomratio = gcanvasheight/h;
                         $canvas.cropper("zoom",-1*(1 - zoomratio));
                         var l = $canvas.cropper('getCanvasData');
@@ -128,7 +127,8 @@
         }
     );
     me.on('rotateend',function (e) {
-
+        gcropper[0].getContext('2d').rotate(45*Math.PI/180);
+        save(gcropper[0].toDataURL());
         }
     );
    }(jQuery,Piccolo));
