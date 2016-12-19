@@ -100,6 +100,32 @@
 
         }
 
+
+
+        /**
+         * Loads image file at index
+         * @param index
+         */
+        _this.loadFileAt = function(index){
+
+            var url = window.URL || window.webkitURL;
+            var file = _this.files[index];
+            var img = new Image();
+            var src = url.createObjectURL(file);
+            img.src = src;
+
+            img.onload = function(){
+
+                //Raise image ready event
+                obj.raise('onimageready', { source: img });
+
+                url.revokeObjectURL(src);
+
+            };
+
+        };
+
+
     };
 
 
@@ -161,30 +187,6 @@
         _this.currentfileindex = 0;
         _this.files.length && _this.loadFileAt(_this.currentfileindex);
         
-    };
-
-
-    /**
-     * Loads image file at index
-     * @param index
-     */
-    _this.loadFileAt = function(index){
-
-        var url = window.URL || window.webkitURL;
-        var file = _this.files[index];
-        var img = new Image();
-        var src = url.createObjectURL(file);
-        img.src = src;
-
-        img.onload = function(){
-
-            //Raise image ready event
-            obj.raise('onimageready', { source: img });
-
-            url.revokeObjectURL(src);
-
-        };
-
     };
 
 
