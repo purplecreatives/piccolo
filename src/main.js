@@ -10,6 +10,7 @@ var Piccolo = (function ($, me){
     function Internal_Piccolo(element, options){
 
         var _internal = this;
+        this.id = "";
 
         //Private properts
         var _this = {
@@ -201,7 +202,10 @@ var Piccolo = (function ($, me){
 
         return this.each(function(){
 
-            me.elements[me.incrementId++ + ""] = new Internal_Piccolo(this, options);
+            var p = new Internal_Piccolo(this, options);
+            p.id = me.incrementId + "";
+            me.elements[p.id] = p;
+            me.incrementId++;
 
         });
 
