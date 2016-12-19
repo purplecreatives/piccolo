@@ -38,7 +38,9 @@ var Piccolo = (function ($, me){
         uploadurl: '../../uploads/index.php',
         postvariablename: 'file',
         multiplefileupload: false,
-        debug: false
+        debug: false,
+        preloadimage: null,
+        imagefilename: null
     };
 
 
@@ -118,6 +120,20 @@ var Piccolo = (function ($, me){
 
     };
 
+    _this.preloadImage = function(){
+
+        var img = new Image();
+        img.src = me.settings.preloadimage;
+
+        img.onload = function(){
+
+            //Raise image ready event
+            me.raise('onimageready', { source: img });
+
+        };
+
+    };
+
 
     /**
      * Do preliminary setup here of dom and of script
@@ -127,6 +143,7 @@ var Piccolo = (function ($, me){
         var $parent = $(this);
         me.settings.postvariablename = $parent.data("post") || me.settings.postvariablename;
         me.settings.uploadurl = $parent.data("url") || me.settings.uploadurl;
+        me.settings.preloadimage = $parent.data("image") || me.settings.preloadimage;
 
         me.settings.debug && console.log('Init Piccolo from jQuery');
 
@@ -137,6 +154,9 @@ var Piccolo = (function ($, me){
 
         //Create dropzone
         me.createDropzone(this);
+
+
+        me.settings.preloadimage && _this.preloadImage();
 
         return this;        //Return object for chain
 
