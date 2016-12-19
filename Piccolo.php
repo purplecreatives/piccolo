@@ -328,7 +328,7 @@ class Piccolo
 
     public $fileextension;
     public $mime;
-    public $filename;
+    public $imagefilename;
     public $filesize;
 
     private function __construct($options = array()){
@@ -363,8 +363,8 @@ class Piccolo
     public function save($filename_no_extension){
 
         $im = imagecreatefromstring(base64_decode($this->base64_image));
-        $this->filename = $filename_no_extension.$this->fileextension;
-        $path = $this->uploaddirectory.'/'.$this->filename;
+        $this->imagefilename = $filename_no_extension.$this->fileextension;
+        $path = $this->uploaddirectory.'/'.$this->imagefilename;
         $imagefunction = str_replace('/', '', $this->mime);
 
         if($im !== false){
