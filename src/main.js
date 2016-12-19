@@ -10,7 +10,8 @@ var Piccolo = (function ($, me){
     function Internal_Piccolo(element, options){
 
         var _internal = this;
-        this.id = "";
+        _internal.id = "";
+        _internal.zone = element;
 
         //Private properts
         var _this = {
@@ -32,9 +33,7 @@ var Piccolo = (function ($, me){
                 onrotateend: [],
                 onrotatecancel: [],
                 onreset: []
-            },
-
-            zone: element
+            }
 
         };
 
@@ -121,7 +120,8 @@ var Piccolo = (function ($, me){
                         _internal.settings.debug && console.log('Raising event: ' + ++count);
 
                         //Attach element raising event
-                        evt.element = _this.zone;
+                        //console.log(me);
+                        evt.element = _internal.zone;
                         evt.parentObject = _internal;
                         fxn(evt);
 
@@ -142,7 +142,7 @@ var Piccolo = (function ($, me){
 
         this.on('imageready', function(evt){
 
-            var imagezone = me.createImagezone(_internal, _this.zone);
+            var imagezone = me.createImagezone(_internal, evt.element);
 
             //Image and canvas ready, raise imageloaded event
             //imagezone is equivalent to $(<img/>); evt.source is Image object
@@ -156,7 +156,7 @@ var Piccolo = (function ($, me){
          */
         this.on('reset', function(evt){
 
-            _me.createDropzone(_internal, _this.zone);
+            _me.createDropzone(_internal, _internal.zone);
 
         });
 
@@ -174,7 +174,7 @@ var Piccolo = (function ($, me){
 
         };
 
-        var $parent = $(_this.zone);
+        var $parent = $(_internal.zone);
 
         this.settings.postvariablename = $parent.data("post") || this.settings.postvariablename;
         this.settings.uploadurl = $parent.data("url") || this.settings.uploadurl;
@@ -187,7 +187,7 @@ var Piccolo = (function ($, me){
         this.settings.debug && console.log(element);
 
         //Create dropzone
-        me.createDropzone(this, _this.zone);
+        me.createDropzone(this, _internal.zone);
 
         //Try preloading image
         this.settings.preloadimage && _this.preloadImage();
@@ -206,6 +206,8 @@ var Piccolo = (function ($, me){
 
             var p = new Internal_Piccolo(this, options);
             p.id = me.incrementId + "";
+            $(this).data("id", p.id);
+
             me.elements[p.id] = p;
             me.incrementId++;
 
