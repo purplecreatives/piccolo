@@ -359,7 +359,7 @@ class Piccolo
     public function save($filename_no_extension){
 
         $im = imagecreatefromstring(base64_decode($this->base64_image));
-        $this->imagefilename = $filename_no_extension.$this->fileextension;
+        $this->imagefilename = ($this->imagefilename) ? $this->imagefilename : $filename_no_extension.$this->fileextension;
         $path = $this->uploaddirectory.'/'.$this->imagefilename;
         $imagefunction = str_replace('/', '', $this->mime);
 
