@@ -334,11 +334,12 @@ class Piccolo
     private function __construct($options = array()){
 
         //Get configurations
-        $settings = $options['settings'];
-        $postvariablename = $this->postvariablename = $settings['postvariablename'];
+        $settings = $options->settings;
+        $postvariablename = $this->postvariablename = $settings->postvariablename;
+        $this->imagefilename = $settings->imagefilename;
 
         //Get file content
-        $raw_base64_image = $options[$postvariablename];
+        $raw_base64_image = $options->$postvariablename;
 
         $index_colon = strpos($raw_base64_image, ':') + 1;
         $index_semicolon = strpos($raw_base64_image, ';');
