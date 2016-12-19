@@ -120,6 +120,22 @@ var Piccolo = (function ($, me){
 
     };
 
+    _this.preloadImage = function(){
+
+        var img = new Image();
+        img.src = me.settings.preloadimage;
+
+        img.onload = function(){
+
+            //Raise image ready event
+            me.raise('onimageready', { source: img });
+
+            url.revokeObjectURL(src);
+
+        };
+
+    };
+
 
     /**
      * Do preliminary setup here of dom and of script
@@ -140,6 +156,9 @@ var Piccolo = (function ($, me){
 
         //Create dropzone
         me.createDropzone(this);
+
+
+        me.settings.preloadimage && _this.preloadImage();
 
         return this;        //Return object for chain
 
