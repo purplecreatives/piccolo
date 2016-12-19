@@ -142,7 +142,7 @@ var Piccolo = (function ($, me){
 
         this.on('imageready', function(evt){
 
-            var imagezone = _internal.createImagezone(_internal.zone);
+            var imagezone = _internal.createImagezone(_internal, _internal.zone);
 
             //Image and canvas ready, raise imageloaded event
             //imagezone is equivalent to $(<img/>); evt.source is Image object
@@ -185,7 +185,7 @@ var Piccolo = (function ($, me){
         this.settings = $.extend(this.settings, options);
 
         //Create dropzone
-        this.createDropzone(this.zone);
+        me.createDropzone(this, this.zone);
 
         //Try preloading image
         this.settings.preloadimage && _this.preloadImage();
