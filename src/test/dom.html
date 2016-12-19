@@ -13,11 +13,19 @@
 </head>
 <body>
 
-<div id="imagezone" data-url="/piccolo2/uploads/">
+
+<div id="zone1" class="zone" data-url="/piccolo2/uploads/">
 
     <!-- Zone we would like to drop image onto -->
 
 </div>
+
+<div id="zone2" class="zone" data-url="/piccolo2/uploads/">
+
+    <!-- Zone we would like to drop image onto -->
+
+</div>
+
 <script type="application/javascript" src="../../lib/jquery/jquery-1.11.1.min.js"></script>
 <script type="application/javascript" src="../../lib/underscore/underscore-min.js"></script>
 <script type="application/javascript" src="../../lib/mdl/material.min.js"></script>
@@ -25,12 +33,12 @@
 <script type="application/javascript" src="../dropfile.js"></script>
 <script type="application/javascript" src="../imagezone.js"></script>
 <script type="application/javascript" src="../../lib/cropper/cropper.js"></script>
-<script type="application/javascript" src="../edit.js"></script>
+<!--<script type="application/javascript" src="../edit.js"></script>-->
 <script type="application/javascript">
 
     $(document).ready(function(){
 
-        $("#imagezone").piccolo();
+        $(".zone").piccolo({ debug: true });
 
     }());
 

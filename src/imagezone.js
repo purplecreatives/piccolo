@@ -6,9 +6,9 @@
     me = me || {};
     var _this = {};
 
-    me.createImagezone = function(parent){
+    me.createImagezone = function(obj, container){
 
-        var $parent = $(parent);
+        var $parent = $(container);
         $parent.addClass('piccolo');
 
         //Remove all events on parent
@@ -90,38 +90,38 @@
 
         var clear_click_handler = function(evt){
 
-            me.raise('onreset', {});
+            obj.raise('onreset', {});
 
         };
 
         
         var rotate_click_handler = function(evt){
 
-            me.raise('onrotatestart', {});
+            obj.raise('onrotatestart', {});
             $done.off(); $cancel.off();
 
             $done.click(function(evt){
 
-                me.raise('onrotateend', {});
+                obj.raise('onrotateend', {});
                 reset();
 
             });
 
             $rotate_ccw.click(function(evt){
 
-                me.raise('onrotateccw', {});
+                obj.raise('onrotateccw', {});
 
             });
 
             $rotate_cw.click(function(evt){
 
-                me.raise('onrotatecw', {});
+                obj.raise('onrotatecw', {});
 
             });
 
             $cancel.click(function(evt){
 
-                me.raise('onrotatecancel', {});
+                obj.raise('onrotatecancel', {});
                 reset();
 
             });
@@ -138,19 +138,19 @@
         
         var crop_click_handler = function(evt){
 
-            me.raise('oncropstart', {});
+            obj.raise('oncropstart', {});
             $done.off(); $cancel.off();
 
             $done.click(function(evt){
 
-                me.raise('oncropend', {});
+                obj.raise('oncropend', {});
                 reset();
 
             });
 
             $cancel.click(function(evt){
 
-                me.raise('oncropcancel', {});
+                obj.raise('oncropcancel', {});
                 reset();
 
             });

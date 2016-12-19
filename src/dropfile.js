@@ -13,9 +13,9 @@
     /**
      * DOM
      */
-    me.createDropzone = function(parent){
+    me.createDropzone = function(obj, container){
 
-        var $parent = $(parent);
+        var $parent = $(container);
         $parent.addClass('piccolo');
 
         //Remove all events on parent
@@ -100,6 +100,34 @@
 
         }
 
+
+    };
+
+
+
+    /**
+     * Loads image file at index
+     * @param index
+     */
+    _this.loadFileAt = function(index, element){
+
+        var objid = $(element).closest('.piccolo').data('id');
+        var obj = me.elements[objid + ""];
+        var url = window.URL || window.webkitURL;
+        var file = _this.files[index];
+        var img = new Image();
+        var src = url.createObjectURL(file);
+        img.src = src;
+
+        img.onload = function(){
+
+            //Raise image ready event
+            obj.raise('onimageready', { source: img });
+
+            url.revokeObjectURL(src);
+
+        };
+
     };
 
 
@@ -140,7 +168,7 @@
         _this.files = _this.getValidFiles(evt.originalEvent.dataTransfer.files);
 
         _this.currentfileindex = 0;
-        _this.files.length && _this.loadFileAt(_this.currentfileindex);
+        _this.files.length && _this.loadFileAt(_this.currentfileindex, evt.target);
 
 
     };
@@ -159,32 +187,8 @@
         _this.files = _this.getValidFiles(evt.originalEvent.target.files);
 
         _this.currentfileindex = 0;
-        _this.files.length && _this.loadFileAt(_this.currentfileindex);
+        _this.files.length && _this.loadFileAt(_this.currentfileindex, evt.target);
         
-    };
-
-
-    /**
-     * Loads image file at index
-     * @param index
-     */
-    _this.loadFileAt = function(index){
-
-        var url = window.URL || window.webkitURL;
-        var file = _this.files[index];
-        var img = new Image();
-        var src = url.createObjectURL(file);
-        img.src = src;
-
-        img.onload = function(){
-
-            //Raise image ready event
-            me.raise('onimageready', { source: img });
-
-            url.revokeObjectURL(src);
-
-        };
-
     };
 
 
