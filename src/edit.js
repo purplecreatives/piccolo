@@ -140,7 +140,6 @@
                     },
                     built: function ()
                     {
-                        cropCanvas
                         gcanvasheight = $canvas.next().height();
                         gcanvaswidth = $canvas.next().width();
                         var h = $canvas.parent().height();
