@@ -142,7 +142,7 @@ var Piccolo = (function ($, me){
 
         this.on('imageready', function(evt){
 
-            var imagezone = _internal.createImagezone(_internal, _internal.zone);
+            var imagezone = me.createImagezone(_internal, _internal.zone);
 
             //Image and canvas ready, raise imageloaded event
             //imagezone is equivalent to $(<img/>); evt.source is Image object
