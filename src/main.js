@@ -5,134 +5,196 @@ var Piccolo = (function ($, me){
 
     me = me || {};
 
-    //Private properts
-    var _this = {
-
-        /**
-         * List of events in library
-         */
-        events: {
-            onready: [],
-            onimageready: [],
-            onimageloaded: [],
-            onimageuploaded: [],
-            oncropstart: [],
-            oncropend: [],
-            oncropcancel: [],
-            onrotatestart: [],
-            onrotateccw: [],
-            onrotatecw: [],
-            onrotateend: [],
-            onrotatecancel: [],
-            onreset: []
-        }
-
-    };
+    var _parent = {
+        incrementId: 0,
+        elements: {}
+    };         //Unique identifier for elements
 
 
-    /**
-     * Default settings
-     */
-    me.settings = {
-        imagesdirectory: null,
-        uploadurl: '../../uploads/index.php',
-        postvariablename: 'file',
-        multiplefileupload: false,
-        debug: false,
-        preloadimage: null,
-        imagefilename: null
-    };
+    function Internal_Piccolo(element, options){
 
+        var _internal = this;
 
-    /**
-     * Registers event listener
-     * @param event
-     * @param callback
-     */
-    me.on = function(event, callback){
+        //Private properts
+        var _this = {
 
-        me.settings.debug && console.log('Registering event: ' + event);
+            /**
+             * List of events in library
+             */
+            events: {
+                onready: [],
+                onimageready: [],
+                onimageloaded: [],
+                onimageuploaded: [],
+                oncropstart: [],
+                oncropend: [],
+                oncropcancel: [],
+                onrotatestart: [],
+                onrotateccw: [],
+                onrotatecw: [],
+                onrotateend: [],
+                onrotatecancel: [],
+                onreset: []
+            },
 
-        if(_.isFunction(callback)){
-
-            event = (event.indexOf('on') === 0) ? event : 'on' + event;
-
-            var callback_index = _this.events[event].indexOf(callback);
-            (callback_index >= 0) || _this.events[event].push(callback);
-
-            me.settings.debug && console.log('Registered ' + _this.events[event].length + ' function(s) for event ' + event);
-
-        }else{
-
-            me.settings.debug && console.log('Event callback invalid: ' + event);
-
-        }
-
-    };
-
-
-    /**
-     * Unregisters event listeners
-     * @param event
-     * @param callback
-     */
-    me.un = function(event, callback){
-
-        me.settings.debug && console.log('Unregistering event: ' + event);
-
-        if(_.isFunction(callback)){
-
-            event = (event.indexOf('on') == 0) ? event : 'on' + event;
-
-            var callback_index = _this.events[event].indexOf(callback);
-            (callback_index >= 0) && _this.events[event].splice(callback_index, 1);
-
-        }
-
-    };
-
-
-    /**
-     * Raise event
-     * @param event
-     * @param evt
-     */
-    me.raise = function(event, evt){
-
-        var count = 0;
-
-        //Raise event on seperate thread
-        _.defer(function(){
-
-            me.settings.debug && console.log('Raising event: ' + event);
-            me.settings.debug && console.log(_this.events[event]);
-
-            _this.events[event] && _this.events[event].forEach(function(fxn){
-                try{
-                    me.settings.debug && console.log('Raising event: ' + ++count);
-                    fxn(evt);
-                }catch(e){
-
-                }
-            });
-
-        })
-
-    };
-
-    _this.preloadImage = function(){
-
-        var img = new Image();
-        img.src = me.settings.preloadimage;
-
-        img.onload = function(){
-
-            //Raise image ready event
-            me.raise('onimageready', { source: img });
+            zone: element
 
         };
 
-    };
+        /**
+         * Default settings
+         */
+        this.settings = {
+            imagesdirectory: null,
+            uploadurl: '../../uploads/index.php',
+            postvariablename: 'file',
+            multiplefileupload: false,
+            debug: false,
+            preloadimage: null,
+            imagefilename: null
+        };
+
+
+        /**
+         * Registers event listener
+         * @param event
+         * @param callback
+         */
+        this.on = function(event, callback){
+
+            _internal.settings.debug && console.log('Registering event: ' + event);
+
+            if(_.isFunction(callback)){
+
+                event = (event.indexOf('on') === 0) ? event : 'on' + event;
+
+                var callback_index = _this.events[event].indexOf(callback);
+                (callback_index >= 0) || _this.events[event].push(callback);
+
+                this.settings.debug && console.log('Registered ' + _this.events[event].length + ' function(s) for event ' + event);
+
+            }else{
+
+                _internal.settings.debug && console.log('Event callback invalid: ' + event);
+
+            }
+
+        };
+
+
+        /**
+         * Unregisters event listeners
+         * @param event
+         * @param callback
+         */
+        this.un = function(event, callback){
+
+            _internal.settings.debug && console.log('Unregistering event: ' + event);
+
+            if(_.isFunction(callback)){
+
+                event = (event.indexOf('on') == 0) ? event : 'on' + event;
+
+                var callback_index = _this.events[event].indexOf(callback);
+                (callback_index >= 0) && _this.events[event].splice(callback_index, 1);
+
+            }
+
+        };
+
+
+        /**
+         * Raise event
+         * @param event
+         * @param evt
+         */
+        this.raise = function(event, evt){
+
+            var count = 0;
+
+            //Raise event on seperate thread
+            _.defer(function(){
+
+                _internal.settings.debug && console.log('Raising event: ' + event);
+                _internal.settings.debug && console.log(_this.events[event]);
+
+                _this.events[event] && _this.events[event].forEach(function(fxn){
+
+                    try{
+                        _internal.settings.debug && console.log('Raising event: ' + ++count);
+
+                        //Attach element raising event
+                        evt.element = _internal.zone;
+                        fxn(evt);
+
+                    }catch(e){
+
+                    }
+
+                });
+
+            })
+
+        };
+
+
+        /**
+         * Listen for image ready event to add canvas and menue
+         */
+
+        this.on('imageready', function(evt){
+
+            var imagezone = _internal.createImagezone(_internal.zone);
+
+            //Image and canvas ready, raise imageloaded event
+            //imagezone is equivalent to $(<img/>); evt.source is Image object
+            this.raise('onimageloaded', { target: imagezone, source: evt.source });
+
+        });
+
+
+        /**
+         * Listen to reset event to reset DOM
+         */
+        this.on('reset', function(evt){
+
+            _internal.createDropzone(_this.zone);
+
+        });
+
+        _this.preloadImage = function(){
+
+            var img = new Image();
+            img.src = _internal.settings.preloadimage;
+
+            img.onload = function(){
+
+                //Raise image ready event
+                _internal.raise('onimageready', { source: img });
+
+            };
+
+        };
+
+        var $parent = $(this.zone);
+        this.settings.postvariablename = $parent.data("post") || this.settings.postvariablename;
+        this.settings.uploadurl = $parent.data("url") || this.settings.uploadurl;
+        this.settings.preloadimage = $parent.data("image") || this.settings.preloadimage;
+
+        this.settings.debug && console.log('Init Piccolo from jQuery');
+
+        //Extend settings with options passed
+        this.settings = $.extend(this.settings, options);
+
+        //Create dropzone
+        this.createDropzone(this.zone);
+
+        //Try preloading image
+        this.settings.preloadimage && _this.preloadImage();
+
+        return this;
+
+    }
 
 
     /**
@@ -140,51 +202,13 @@ var Piccolo = (function ($, me){
      */
     $.fn.piccolo = function(options){
 
-        var $parent = $(this);
-        me.settings.postvariablename = $parent.data("post") || me.settings.postvariablename;
-        me.settings.uploadurl = $parent.data("url") || me.settings.uploadurl;
-        me.settings.preloadimage = $parent.data("image") || me.settings.preloadimage;
+        return this.each(function(){
 
-        me.settings.debug && console.log('Init Piccolo from jQuery');
+            _parent.elements[_parent.incrementId++ + ""] = new Internal_Piccolo(this, options);
 
-        _this.zone = this;
-
-        //Extend settings with options passed
-        me.settings = $.extend(me.settings, options);
-
-        //Create dropzone
-        me.createDropzone(this);
-
-
-        me.settings.preloadimage && _this.preloadImage();
-
-        return this;        //Return object for chain
+        });
 
     };
-
-    /**
-     * Listen for image ready event to add canvas and menue
-     */
-
-    me.on('imageready', function(evt){
-
-        var imagezone = me.createImagezone(_this.zone);
-
-        //Image and canvas ready, raise imageloaded event
-        //imagezone is equivalent to $(<img/>); evt.source is Image object
-        me.raise('onimageloaded', { target: imagezone, source: evt.source });
-
-    });
-
-
-    /**
-     * Listen to reset event to reset DOM
-     */
-    me.on('reset', function(evt){
-
-        me.createDropzone(_this.zone);
-
-    });
 
     return me;
 
