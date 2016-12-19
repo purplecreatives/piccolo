@@ -204,9 +204,10 @@ var Piccolo = (function ($, me){
 
         return this.each(function(){
 
+            var id = me.incrementId + "";
+            $(this).attr("data-id", id);
             var p = new Internal_Piccolo(this, options);
-            p.id = me.incrementId + "";
-            $(this).data("id", p.id);
+            p.id = id;
 
             me.elements[p.id] = p;
             me.incrementId++;
