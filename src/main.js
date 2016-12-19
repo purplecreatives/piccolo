@@ -184,7 +184,7 @@ var Piccolo = (function ($, me){
         this.settings = $.extend(this.settings, options);
 
         this.settings.debug && console.log('Init Piccolo from jQuery');
-
+        this.settings.debug && console.log(element);
 
         //Create dropzone
         me.createDropzone(this, _this.zone);
