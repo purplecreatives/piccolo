@@ -40,8 +40,7 @@ var Piccolo = (function ($, me){
         multiplefileupload: false,
         debug: false,
         preloadimage: null,
-        imagefilename: null,
-        file: null
+        imagefilename: null
     };
 
 
