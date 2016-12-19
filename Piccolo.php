@@ -337,9 +337,7 @@ class Piccolo
         $postvariablename = $this->postvariablename = $options['postvariablename'];
         $this->uploaddirectory = $options['uploaddirectory'];
 
-        //Get http payload
-        $payload = file_get_contents('php://input');
-        $data = json_decode($payload);
+
 
         //Get file content
         $raw_base64_image = $data->$postvariablename;
@@ -384,14 +382,16 @@ class Piccolo
     }
 
 
-    public static function init($uploaddirectory, $postvariablename = 'file'){
+    public static function init($uploaddirectory){
 
-        $postvariablename = ($postvariablename) ? $postvariablename : 'file';
+        //Get http payload
+        $payload = file_get_contents('php://input');
+        $data = json_decode($payload);
 
-        return new Piccolo(array(
-            'postvariablename' => $postvariablename,
-            'uploaddirectory' => $uploaddirectory
-        ));
+        $piccolo = new Piccolo($data);
+        $piccolo->uploaddirectory = $uploaddirectory;
+
+        return $piccolo;
 
     }
 
