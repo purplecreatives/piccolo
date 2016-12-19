@@ -13,9 +13,9 @@
     /**
      * DOM
      */
-    me.createDropzone = function(parent){
+    me.createDropzone = function(obj, container){
 
-        var $parent = $(parent);
+        var $parent = $(container);
         $parent.addClass('piccolo');
 
         //Remove all events on parent
@@ -179,7 +179,7 @@
         img.onload = function(){
 
             //Raise image ready event
-            me.raise('onimageready', { source: img });
+            obj.raise('onimageready', { source: img });
 
             url.revokeObjectURL(src);
 
