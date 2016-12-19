@@ -130,8 +130,6 @@ var Piccolo = (function ($, me){
             //Raise image ready event
             me.raise('onimageready', { source: img });
 
-            url.revokeObjectURL(src);
-
         };
 
     };
