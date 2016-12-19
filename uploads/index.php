@@ -8,7 +8,7 @@
 require '../Piccolo.php';
 require '../Response.php';
 
-$piccolo = Piccolo::init('/xampp/htdocs/piccolo/uploads');
+$piccolo = Piccolo::init('/xampp/htdocs/piccolo2/uploads');
 $status = $piccolo->save(uniqid());
 
 echo json_encode(new Response($status, $piccolo));
