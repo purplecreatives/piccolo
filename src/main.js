@@ -121,7 +121,7 @@ var Piccolo = (function ($, me){
                         _internal.settings.debug && console.log('Raising event: ' + ++count);
 
                         //Attach element raising event
-                        evt.element = _internal.zone;
+                        evt.element = _this.zone;
                         evt.parentObject = _internal;
                         fxn(evt);
 
@@ -142,7 +142,7 @@ var Piccolo = (function ($, me){
 
         this.on('imageready', function(evt){
 
-            var imagezone = me.createImagezone(_internal, _internal.zone);
+            var imagezone = me.createImagezone(_internal, _this.zone);
 
             //Image and canvas ready, raise imageloaded event
             //imagezone is equivalent to $(<img/>); evt.source is Image object
@@ -156,7 +156,7 @@ var Piccolo = (function ($, me){
          */
         this.on('reset', function(evt){
 
-            _internal.createDropzone(_this.zone);
+            _me.createDropzone(_internal, _this.zone);
 
         });
 
@@ -174,18 +174,20 @@ var Piccolo = (function ($, me){
 
         };
 
-        var $parent = $(this.zone);
+        var $parent = $(_this.zone);
+
         this.settings.postvariablename = $parent.data("post") || this.settings.postvariablename;
         this.settings.uploadurl = $parent.data("url") || this.settings.uploadurl;
         this.settings.preloadimage = $parent.data("image") || this.settings.preloadimage;
 
-        this.settings.debug && console.log('Init Piccolo from jQuery');
-
         //Extend settings with options passed
         this.settings = $.extend(this.settings, options);
 
+        this.settings.debug && console.log('Init Piccolo from jQuery');
+
+
         //Create dropzone
-        me.createDropzone(this, this.zone);
+        me.createDropzone(this, _this.zone);
 
         //Try preloading image
         this.settings.preloadimage && _this.preloadImage();
