@@ -16,6 +16,7 @@ var Piccolo = (function ($, me){
         //Private properts
         var _this = {
 
+
             /**
              * List of events in library
              */
@@ -36,6 +37,22 @@ var Piccolo = (function ($, me){
             }
 
         };
+
+        var events = [
+            'onready',
+            'onimageready',
+            'onimageloaded',
+            'onimageuploaded',
+            'oncropstart',
+            'oncropend',
+            'oncropcancel',
+            'onrotatestart',
+            'onrotateccw',
+            'onrotatecw',
+            'onrotateend',
+            'onrotatecancel',
+            'onreset'
+        ];
 
         /**
          * Default settings
@@ -141,12 +158,11 @@ var Piccolo = (function ($, me){
          */
 
         this.on('imageready', function(evt){
-
             var imagezone = me.createImagezone(_internal, evt.element);
 
             //Image and canvas ready, raise imageloaded event
             //imagezone is equivalent to $(<img/>); evt.source is Image object
-            this.raise('onimageloaded', { target: imagezone, source: evt.source });
+            _internal.raise('onimageloaded', { target: imagezone, source: evt.source });
 
         });
 
@@ -156,9 +172,18 @@ var Piccolo = (function ($, me){
          */
         this.on('reset', function(evt){
 
-            _me.createDropzone(_internal, _internal.zone);
+            me.createDropzone(_internal, _internal.zone);
 
         });
+
+
+
+        this.on('imageloaded',function (evt)
+        {
+
+            me.createEditzone(_internal, evt);
+        });
+
 
         _this.preloadImage = function(){
 
@@ -185,6 +210,10 @@ var Piccolo = (function ($, me){
 
         this.settings.debug && console.log('Init Piccolo from jQuery');
         this.settings.debug && console.log(element);
+
+        events.forEach(function (evt) {
+            options.events && options.events[evt] && _internal.on(evt.substr(2),options.events[evt]);
+        });
 
         //Create dropzone
         me.createDropzone(this, _internal.zone);
