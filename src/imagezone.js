@@ -90,6 +90,8 @@
 
         var clear_click_handler = function(evt){
 
+            var objid = $(evt.target).closest('.piccolo').data('id');
+            var obj = me.elements[objid + ""];
             obj.raise('onreset', {});
 
         };
@@ -97,11 +99,15 @@
         
         var rotate_click_handler = function(evt){
 
+            var objid = $(evt.target).closest('.piccolo').data('id');
+            var obj = me.elements[objid + ""];
             obj.raise('onrotatestart', {});
             $done.off(); $cancel.off();
 
             $done.click(function(evt){
 
+                var objid = $(evt.target).closest('.piccolo').data('id');
+                var obj = me.elements[objid + ""];
                 obj.raise('onrotateend', {});
                 reset();
 
@@ -109,18 +115,24 @@
 
             $rotate_ccw.click(function(evt){
 
+                var objid = $(evt.target).closest('.piccolo').data('id');
+                var obj = me.elements[objid + ""];
                 obj.raise('onrotateccw', {});
 
             });
 
             $rotate_cw.click(function(evt){
 
+                var objid = $(evt.target).closest('.piccolo').data('id');
+                var obj = me.elements[objid + ""];
                 obj.raise('onrotatecw', {});
 
             });
 
             $cancel.click(function(evt){
 
+                var objid = $(evt.target).closest('.piccolo').data('id');
+                var obj = me.elements[objid + ""];
                 obj.raise('onrotatecancel', {});
                 reset();
 
@@ -138,11 +150,15 @@
         
         var crop_click_handler = function(evt){
 
+            var objid = $(evt.target).closest('.piccolo').data('id');
+            var obj = me.elements[objid + ""];
             obj.raise('oncropstart', {});
             $done.off(); $cancel.off();
 
             $done.click(function(evt){
 
+                var objid = $(evt.target).closest('.piccolo').data('id');
+                var obj = me.elements[objid + ""];
                 obj.raise('oncropend', {});
                 reset();
 
@@ -150,6 +166,8 @@
 
             $cancel.click(function(evt){
 
+                var objid = $(evt.target).closest('.piccolo').data('id');
+                var obj = me.elements[objid + ""];
                 obj.raise('oncropcancel', {});
                 reset();
 

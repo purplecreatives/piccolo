@@ -33,12 +33,16 @@
 <script type="application/javascript" src="../dropfile.js"></script>
 <script type="application/javascript" src="../imagezone.js"></script>
 <script type="application/javascript" src="../../lib/cropper/cropper.js"></script>
-<!--<script type="application/javascript" src="../edit.js"></script>-->
+<script type="application/javascript" src="../edit.js"></script>
 <script type="application/javascript">
 
     $(document).ready(function(){
 
-        $(".zone").piccolo({ debug: true });
+        $(".zone").piccolo({ debug: true ,events: {
+            onimageready: function (evt) {
+                alert("this is a user listended event");
+            }
+        }});
 
     }());
 
