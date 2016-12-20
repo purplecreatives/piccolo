@@ -171,13 +171,14 @@
 
               var toSend;
 
-              if(imageData.data.length > 800000){
-
-                  d.toBlob(
-                      function (blob) {
-                          toSend = blob;
-                      });
-
+              if(imageData.data.length > 800000 || obj.settings.blob == true){
+                  var blobBin = atob(d.toDataURL().split(',')[1]);
+                  var array = [];
+                  for(var i = 0; i < blobBin.length; i++) {
+                      array.push(blobBin.charCodeAt(i));
+                  }
+                  toSend = new Blob([new Uint8Array(array)], {type: 'image/png'});
+                  obj.settings.blob = true;
               }
               else{
                     toSend = d.toDataURL();
