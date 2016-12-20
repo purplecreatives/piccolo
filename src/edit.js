@@ -128,7 +128,7 @@
           }
           else
           {
-              gcanvas.cropper('zoom',-1*zoomFactor);
+              gcanvas.cropper('zoom',-1*zoomFactor); 
               gcanvas.cropper('moveTo',0,0);
           }
           gcanvas.cropper("disable");
