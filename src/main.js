@@ -33,7 +33,9 @@ var Piccolo = (function ($, me){
                 onrotatecw: [],
                 onrotateend: [],
                 onrotatecancel: [],
-                onreset: []
+                onreset: [],
+                onimageuploading:[],
+                onimageuploadfailed:[]
             }
 
         };
@@ -51,7 +53,9 @@ var Piccolo = (function ($, me){
             'onrotatecw',
             'onrotateend',
             'onrotatecancel',
-            'onreset'
+            'onreset',
+            'onimageuploading',
+            'onimageuploadfailed'
         ];
 
         /**
