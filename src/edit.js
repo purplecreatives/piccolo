@@ -161,47 +161,35 @@
 
       function save(d)
       {
-
-
           if(obj.settings.uploadurl != null)
           {
-              var ctx = d.getContext('2d');
-
-              var imageData = ctx.getImageData(0, 0, d.width, d.height);
-
-              var toSend;
-
-              if(imageData.data.length > 800000){
-
-                  d.toBlob(
-                      function (blob) {
-                          toSend = blob;
-                      });
-
-              }
-              else{
-                    toSend = d.toDataURL();
-              }
-
-                      var xhr = new XMLHttpRequest();
-                      xhr.open('POST', obj.settings.uploadurl, true);
-                      xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-                      var t = {};
-                      t[obj.settings.postvariablename] = toSend;
-                      t["settings"] = obj.settings;
-                      xhr.onload = function ()
+              var xhr = new XMLHttpRequest();
+              xhr.open('POST', obj.settings.uploadurl, true);
+              xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+              var t = {};
+              t[obj.settings.postvariablename] = d.toDataURL();
+              t["settings"] = obj.settings;
+              xhr.onload = function ()
+              {
+                  if (xhr.readyState === xhr.DONE)
+                  {
+                      if (xhr.status === 200)
                       {
-                          if (xhr.readyState === xhr.DONE)
-                          {
-                              if (xhr.status === 200)
-                              {
-                                  var r =  JSON.parse(xhr.response).data;
-                                  obj.settings.imagefilename = obj.settings.imagefilename || r.imagefilename;
-                                  obj.raise('onimageuploaded', r);
-                              }
-                          }
-                      };
-                      xhr.send(JSON.stringify(t)
+                          var r =  JSON.parse(xhr.response).data;
+                          obj.settings.imagefilename = obj.settings.imagefilename || r.imagefilename;
+                          obj.raise('onimageuploaded', r);
+                      }
+                      else
+                      {
+                          obj.raise('onimageuploadfailed', {});
+                      }
+                  }
+              };
+
+
+
+              obj.raise('onimageuploading', {});
+              xhr.send(JSON.stringify(t)
 
               );
           }
